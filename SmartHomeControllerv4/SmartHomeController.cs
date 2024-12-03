@@ -1,5 +1,6 @@
 ﻿using SmartHomeController;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 
 public class Program
 {
@@ -114,7 +115,8 @@ public class Program
     public static void MainMenu()
     {
         while (true)
-        {           
+        {
+            Console.Clear();
             Console.WriteLine("Main Menu:");
             Console.WriteLine("1. Install new device");
             Console.WriteLine("2. Control a device");
@@ -127,7 +129,7 @@ public class Program
             switch (choice)
             {
                 case "1":
-                    //InstallDeviceMenu();
+                    InstallDeviceMenu();
                     break;
                 case "2":
                     //ControlDevicesMenu();
@@ -144,6 +146,62 @@ public class Program
         }
     }
 
+    public static void InstallDeviceMenu()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Install a device menu");
+            Console.WriteLine("1. Install new smart light");
+            Console.WriteLine("2. Install new smart security camera");
+            Console.WriteLine("3. Return to main menu");
+            Console.WriteLine("Please choose an option (1-3)");
 
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    InstallSmartLightMenu();
+                    break;
+
+                case "2":
+                    break;
+
+                case "3":
+                    return;
+
+            }
+        }
+    }
+
+    public static void InstallSmartLightMenu()
+    {
+        Console.WriteLine("\nInstall smart light");
+        Console.WriteLine("Enter device ID: ");
+        int deviceId = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("\nEnter device name: ");
+        string deviceName = Console.ReadLine();
+
+        Console.WriteLine("\nEnter brightness (1-100): ");
+        double brightness = Convert.ToDouble(Console.ReadLine());
+
+        Console.WriteLine("\nEnter default colour: ");
+        string colour = Console.ReadLine();
+
+        // create new object
+        SmartLight smartLight = new SmartLight(deviceId, deviceName, brightness, colour);
+
+        // add new smart light object to devices list
+        devices.Add(smartLight);
+
+        // output new smart light info to screen
+        Console.WriteLine("Smart light installed.");
+        Console.WriteLine($"Device ID: {smartLight.DeviceID}");
+        Console.WriteLine($"Name: {smartLight.DeviceName}");
+        Console.WriteLine($"Default colour: {smartLight.Colour}");
+        Console.WriteLine($"Brightness: {smartLight.Brightness}");
+        Console.WriteLine("\nReturning to main menu...");
+    }
 
 }
