@@ -204,4 +204,26 @@ public class Program
         Console.WriteLine("\nReturning to main menu...");
     }
 
+    public static void SaveDevices(string filepath, List<SmartDevice> devices)
+    {
+        var lines = new List<string>
+        {
+            "DeviceID, DeviceType, DeviceName, Brightness, Colour, CameraRes, CurrentTemp, TargetTemp, SpeakerVolume"
+        };
+        foreach (var device in devices)
+        {
+            string deviceLine;
+            if (device is SmartLight light)
+            {
+                deviceLine = $"{light.DeviceID}," +
+                    $" SmartLight, {light.DeviceName}, " +
+                    $"{light.Status}, " +
+                    $"{light.Brightness}, " + $"{light.Colour},,,";
+            }
+
+            lines.Add(deviceLine);
+            File.WriteAllLines(filepath, lines);
+        }
+    }
+
 }
